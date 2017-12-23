@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/caee846896d46a366709/maintainability)](https://codeclimate.com/github/asteroidice/power-analyzer-backend/maintainability)
+
 # Power Analyzer (Backend)
 This is the backend component of Nathan Zimmerly and Ryan Rabello's senior project.
 
