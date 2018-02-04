@@ -1,1 +1,14 @@
 **/**.pyc
+*env/
+*.DS_Store
+*db.
+*.db
+*.xml
+*.iml
+*.sqlite3
+*.jpg
+*.jpeg
+.vsCode/*
+files/*
+*.pid
+.ropenproject/
