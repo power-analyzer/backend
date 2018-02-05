@@ -1,4 +1,4 @@
-[![Build](https://travis-ci.org/asteroidice/power-analyzer-backend.svg?branch=master)](https://travis-ci.org/asteroidice/power-analyzer-backend.svg?branch=master)
+[![Build](https://travis-ci.org/asteroidice/power-analyzer-backend.svg?branch=master)](https://travis-ci.org/asteroidice/power-analyzer-backend?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/caee846896d46a366709/maintainability)](https://codeclimate.com/github/asteroidice/power-analyzer-backend/maintainability)
 
 # Power Analyzer (Backend)
@@ -30,4 +30,4 @@ project.
   2. Go to [localhost:8000/admin](http://localhost:8000/admin) and Login with
   the credentials you just created.
 
-  3. Have fun viewing & editing the data. 
+  3. Have fun viewing & editing the data.
