@@ -20,6 +20,6 @@ script:
   - python manage.py test
 
 after_script:
-  - coverage python manage.py test
+  - coverage manage.py test
   - coverage xml
   - ./cc-test-reporter after-build -t coverage.py --exit-code $TRAVIS_TEST_RESULT
