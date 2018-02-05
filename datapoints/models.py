@@ -29,7 +29,7 @@ class Circuit(models.Model):
 
 
 class Measurement(models.Model):
-    Circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE)
+    circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE)
     # Note: If we choose to allow the device to set the time of measurement
     # this will have to be changed to a value that can be set.
     time = models.DateTimeField(auto_now_add=True)
