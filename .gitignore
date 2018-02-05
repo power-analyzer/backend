@@ -1,4 +1,4 @@
-**/**.pyc
+**.pyc
 *env/
 *.DS_Store
 *db.
