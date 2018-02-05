@@ -13,3 +13,4 @@
 files/*
 *.pid
 .ropenproject/
+.coverage
