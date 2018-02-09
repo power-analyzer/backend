@@ -10,7 +10,7 @@ class Building(models.Model):
 
 
 class Device(models.Model):
-    building = models.ForeignKey(Building, on_delete=models.CASCADE)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
     description = models.CharField(max_length=1000)

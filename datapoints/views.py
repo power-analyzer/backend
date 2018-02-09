@@ -1,7 +1,7 @@
 import json
 
-from django.http import HttpResponse
-from django.views.decorators.http import require_POST
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.http import require_POST, require_GET
 from django.shortcuts import get_object_or_404
 
 from .models import Measurement, Circuit, Device
@@ -44,3 +44,12 @@ def batch_upload(request, device_id):
         measurement.circuit = circuit
         measurement.save()
     return HttpResponse('{status:"success"}')
+
+
+@require_GET
+def register_device(request):
+    new_device = Device()
+    new_device.save()
+    new_device.name = "New Device " + str(new_device.id)
+    new_device.save()
+    return JsonResponse({"device_id": new_device.id})
