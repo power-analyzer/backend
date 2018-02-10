@@ -35,12 +35,11 @@ def batch_upload(request, device_id):
         # Set Measurement
         measurement = Measurement()
         for key in ["power", "voltage", "current", "phase"]:
-            setattr(measurement, key, reading[key])
-            # measurement[key] = reading[key]
-        # measurement["power"] = reading["power"]
-        # measurement.voltage = reading["voltage"]
-        # measurement.current = reading["current"]
-        # measurement.phase = reading["phase"]
+            try:
+                setattr(measurement, key, reading[key])
+            except KeyError:
+                pass
+
         measurement.circuit = circuit
         measurement.save()
     return HttpResponse('{status:"success"}')
