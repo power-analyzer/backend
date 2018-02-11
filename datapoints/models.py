@@ -10,13 +10,14 @@ class Building(models.Model):
 
 
 class Device(models.Model):
+    mac = models.CharField(max_length=50, unique=True, null=False)
     building = models.ForeignKey(Building, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
     description = models.CharField(max_length=1000)
 
     def __str__(self):
-        return self.name
+        return "Device: " + self.name
 
     def add_or_get_circuit_id(self, relative_id):
         circuitQuery = Circuit.objects.filter(device=self)\
