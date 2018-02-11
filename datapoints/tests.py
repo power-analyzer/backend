@@ -12,8 +12,10 @@ class GenericTest(TestCase):
         self.assertIs(response.status_code, 200)
 
     def test_batch_upload(self):
+        test_mac = "123456"
         client = Client()
         device = Device()
+        device.mac = test_mac
         device.save()
         measurements = json.dumps({"measurements": [
             {"circuit_id": 1, "voltage": 120, "current": 10, "phase": 0},
@@ -21,7 +23,7 @@ class GenericTest(TestCase):
         ]})
         response = client.post(
             reverse("datapoints:batch_upload",
-                    kwargs={'device_id': device.id}),
+                    kwargs={'mac': test_mac}),
             data=str(measurements),
             content_type="text/html"
         )
