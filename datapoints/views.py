@@ -31,7 +31,7 @@ def batch_upload(request, mac):
 
         measurement.circuit = circuit
         measurement.save()
-    return HttpResponse('{status:"success"}')
+    return HttpResponse('{"status":"success"}')
 
 
 @require_GET
