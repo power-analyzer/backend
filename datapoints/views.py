@@ -1,6 +1,6 @@
 import json
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST, require_GET
 # from django.shortcuts import get_object_or_404
 
@@ -38,3 +38,18 @@ def batch_upload(request, mac):
 def register_device(request, mac):
     device = get_or_add_device(mac)
     return JsonResponse({"mac": device.mac})
+
+
+@require_GET
+def get_relative_circuit(request, device_id, circuit_id, start_time, end_time):
+    try:
+        device = Device.objects.get(pk=device_id)
+        circuit = Circuit.objects.get(device=device, id=circuit_id)
+
+    except MultipleObjectsReturned:
+        return HttpResponseBadRequest({'status': 'success'})
+
+
+@require_GET
+def get_circuit(request, circuit_id):
+    pass

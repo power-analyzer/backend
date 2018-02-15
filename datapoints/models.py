@@ -39,7 +39,7 @@ class Circuit(models.Model):
     description = models.CharField(max_length=1000)
 
     def __str__(self):
-        return "Circuit: " + self.name
+        return "Circuit " + str(self.id) + ": " + self.name
 
 
 class Measurement(models.Model):
