@@ -25,7 +25,10 @@ SECRET_KEY = 'duq11xty6yn=y&dp7%xcv7f*5b+8^kvp$96ug6)4j@myfu18(l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["172.16.38.103"]
+ALLOWED_HOSTS = [
+    "172.16.38.103",
+    "127.0.0.1:8000",
+]
 
 
 # Application definition
@@ -70,6 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'power_analyzer.wsgi.application'
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
