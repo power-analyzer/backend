@@ -20,7 +20,8 @@ def get_or_add_device(mac):
 def archive_or_add_measurement(measurement):
     circuit = measurement.circuit
     unarchived_measurements = UnarchivedMeasurement.objects.filter(circuit=circuit).order_by('time')
-    if measurement.time > unarchived_measurements[-1].time + datetime.timedelta(minutes = 30):
+    if len(unarchived_measurements) > 0 and \
+measurement.time > unarchived_measurements.last().time + datetime.timedelta(minutes = 30):
         archive_measurements(circuit)
     measurement.save()
 
