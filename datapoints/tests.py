@@ -1,7 +1,7 @@
 import json
 from django.test import TestCase, Client
 from django.urls import reverse
-from datapoints.models import Device
+from datapoints.models import Device, UnarchivedMeasurement
 
 
 class GenericTest(TestCase):
@@ -28,3 +28,8 @@ class GenericTest(TestCase):
             content_type="text/html"
         )
         self.assertIs(response.status_code, 200)
+
+
+    def test_archive_measurements(self):
+        # TODO: Write this
+        pass

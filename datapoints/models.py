@@ -41,12 +41,24 @@ class Circuit(models.Model):
     def __str__(self):
         return "Circuit: " + self.name
 
+class UnarchivedMeasurement(models.Model):
+    circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE)
+    time = models.DateTimeField()
+
+    # TODO: Remove `null=True` when we figure out exaclty what data will
+    # be measured.
+    power = models.FloatField(null=True)
+    voltage = models.FloatField(null=True)
+    current = models.FloatField(null=True)
+    phase = models.FloatField(null=True)
+
+    def __str__(self):
+        return str(self.time)
+
 
 class Measurement(models.Model):
     circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE)
-    # Note: If we choose to allow the device to set the time of measurement
-    # this will have to be changed to a value that can be set.
-    time = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField()
 
     # TODO: Remove `null=True` when we figure out exaclty what data will
     # be measured.
