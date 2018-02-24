@@ -1,5 +1,4 @@
 import json
-import datetime
 
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST, require_GET
@@ -20,7 +19,7 @@ def batch_upload(request, mac):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
     measurements = body["measurements"]
-    time = datetime.datetime.now()
+    time = timezone.now()
     for reading in measurements:
         # Get circuit
         circuit = device.add_or_get_circuit_id(reading["circuit_id"])
