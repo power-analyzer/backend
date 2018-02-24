@@ -1,6 +1,5 @@
-import datetime
-
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils import timezone
 
 from datapoints.models import Device, UnarchivedMeasurement, Measurement
 
@@ -21,7 +20,7 @@ def archive_or_add_measurement(measurement):
     circuit = measurement.circuit
     unarchived_measurements = UnarchivedMeasurement.objects.filter(circuit=circuit).order_by('time')
     if len(unarchived_measurements) > 0 and \
-measurement.time > unarchived_measurements.last().time + datetime.timedelta(minutes = 30):
+measurement.time > unarchived_measurements.last().time + timezone.timedelta(minutes = 30):
         archive_measurements(circuit)
     measurement.save()
 
