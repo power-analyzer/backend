@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "172.16.38.103",
-    "localhost"
+    "localhost",
+    "127.0.0.1",
 ]
 
 
@@ -73,6 +74,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'power_analyzer.wsgi.application'
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
