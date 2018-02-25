@@ -1,5 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
+from django.conf import settings
 
 from datapoints.models import Device, UnarchivedMeasurement, Measurement
 
@@ -18,9 +19,9 @@ def get_or_add_device(mac):
 
 def archive_or_add_measurement(measurement):
     circuit = measurement.circuit
-    unarchived_measurements = UnarchivedMeasurement.objects.filter(circuit=circuit).order_by('time')
+    unarchived_measurements = UnarchivedMeasurement.objects.filter(circuit=circuit).order_by('-time')
     if len(unarchived_measurements) > 0 and \
-measurement.time > unarchived_measurements.last().time + timezone.timedelta(minutes = 30):
+measurement.time > unarchived_measurements.last().time + timezone.timedelta(minutes = settings.ARCHIVE_TIME):
         archive_measurements(circuit)
     measurement.save()
 
@@ -28,14 +29,14 @@ measurement.time > unarchived_measurements.last().time + timezone.timedelta(minu
 def archive_measurements(circuit):
     measurement = Measurement()
     measurement.circuit = circuit
-    unarchived_measurements = UnarchivedMeasurement.objects.filter(circuit=circuit).order_by('time')
+    unarchived_measurements = UnarchivedMeasurement.objects.filter(circuit=circuit).order_by('-time')
     # Calculate new measurement time.
-    last = unarchived_measurements.last().time
-    first = unarchived_measurements.first().time
-    measurement.time = (last - first) / 2 + first
+    newest = unarchived_measurements.first().time
+    oldest = unarchived_measurements.last().time
+    measurement.time = (newest - oldest) / 2 + oldest
 
     #Calculate new power, voltage, and current
-    dT = (last - first) / len(unarchived_measurements)
+    dT = (newest - oldest) / len(unarchived_measurements)
     dT = dT.total_seconds()
     for key in ["power", "voltage", "current"]:
         power = 0.0
