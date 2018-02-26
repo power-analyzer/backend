@@ -41,7 +41,7 @@ class GenericTest(TestCase):
             time = timezone.now()
         measurement.time = time
         measurement.circuit = circuit
-        for key in ["power", "current", "voltage", "phase"]:
+        for key in ["current", "voltage", "phase"]:
             setattr(measurement, key, random.randint(1,10)*5)
 
 

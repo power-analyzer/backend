@@ -41,7 +41,10 @@ def archive_measurements(circuit):
     for key in ["power", "voltage", "current"]:
         power = 0.0
         for umeasurement in unarchived_measurements:
-            power += getattr(umeasurement, key, 0) * dT
+            try:
+                power += getattr(umeasurement, key) * dT
+            except (AttributeError, TypeError) as e:
+                pass
 
         try:
             setattr(measurement, key, power)
