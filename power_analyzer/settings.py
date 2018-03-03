@@ -127,3 +127,13 @@ STATIC_URL = '/static/'
 
 # Custom settings
 ARCHIVE_TIME = 30       # Archive interval in minutes
+
+# This is (m, b) in the queation I = m * V + b for the current transformer.
+CT_CURRENT = {
+    "10A": (10.29, 6.9635)
+}
+
+# This is the linear quation for going from the ADC value to the voltage
+CT_VOLTAGE = {
+    "10A": (0.003, 0.0097)
+}
