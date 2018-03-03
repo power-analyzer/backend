@@ -57,3 +57,20 @@ def archive_measurements(circuit):
 
     measurement.save()
     unarchived_measurements.delete()
+
+def convert_measurement_value(value, circuit, key):
+    if key == "voltage":
+        value = value / 16
+        ct_type = circuit.circuit_transformer_type
+        ct_equation_voltage = settings.CT_VOLTAGE[ct_type]
+        return value * ct_equation_voltage[0] + ct_equation_voltage[1]
+    elif key == "current":
+        value = value / 16
+        ct_type = circuit.circuit_transformer_type
+        ct_equation_voltage = settings.CT_VOLTAGE[ct_type]
+        ct_equation_current = settings.CT_CURRENT[ct_type]
+        voltage = value * ct_equation_voltage[0] + ct_equation_voltage[1]
+        return voltage * ct_equation_current[0] + ct_equation_current[1]
+    else:
+        # Phase eventually needs to be converted as well.
+        return value

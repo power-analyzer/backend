@@ -5,8 +5,8 @@ from django.views.decorators.http import require_POST, require_GET
 from django.utils import timezone
 # from django.shortcuts import get_object_or_404
 
-from .models import Measurement, UnarchivedMeasurement
-from .utilities import get_or_add_device, archive_or_add_measurement
+from .models import UnarchivedMeasurement
+from .utilities import get_or_add_device, archive_or_add_measurement, convert_measurement_value
 
 
 def index(request):
@@ -27,9 +27,10 @@ def batch_upload(request, mac):
         measurement = UnarchivedMeasurement()
         measurement.time = time
         # TODO: Magic transformations.
-        for key in ["power", "voltage", "current", "phase"]:
+        for key in ["voltage", "current", "phase"]:
             try:
-                setattr(measurement, key, reading[key])
+                value = convert_measurement_value(reading[key], circuit, key)
+                setattr(measurement, key, value)
             except KeyError:
                 pass
 

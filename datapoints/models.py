@@ -16,6 +16,12 @@ class Device(models.Model):
     location = models.CharField(max_length=200)
     description = models.CharField(max_length=1000)
 
+    phase_offset = models.CharField(
+        max_length=30,
+        choices=(("left", "Left +90"), ("right", "Right -90")),
+        default="right"
+    )
+
     def __str__(self):
         return "Device: " + self.name
 
@@ -37,6 +43,23 @@ class Circuit(models.Model):
     relative_id = models.IntegerField()
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=1000)
+
+    CT_TEN = '10A'
+    CT_LIST = [
+        (CT_TEN, '10 Amp Current Transformer')
+    ]
+
+    circuit_transformer_type = models.CharField(
+        max_length=200,
+        choices=CT_LIST,
+        default=CT_TEN
+    )
+
+    pannel_side = models.CharField(
+        max_length=200,
+        choices=(("left", "Left Side"), ("right", "Right Side")),
+        default="right"
+    )
 
     def __str__(self):
         return "Circuit: " + self.name
