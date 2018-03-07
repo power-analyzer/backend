@@ -18,7 +18,7 @@ class Device(models.Model):
 
     phase_offset = models.CharField(
         max_length=30,
-        choices=(("left", "Left +90"), ("right", "Right -90")),
+        choices=(("left", "Left 0 degrees"), ("right", "Right +180 degrees")),
         default="right"
     )
 
