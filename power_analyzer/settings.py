@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "blarple.net",
+    "35.165.91.189",
 ]
 
 
