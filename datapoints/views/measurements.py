@@ -26,7 +26,6 @@ def batch_upload(request, mac):
         # Set Measurement
         measurement = UnarchivedMeasurement()
         measurement.time = time
-        # TODO: Magic transformations.
         for key in ["voltage", "current", "phase"]:
             try:
                 value = convert_measurement_value(reading[key], circuit, key)
