@@ -11,7 +11,7 @@ urlpatterns = [
     path('buildings', buildings.get_buildings, name="get_buildings"),
     path('devices/<int:id>', devices.get_device, name="get_device"),
     path('devices', devices.get_devices, name="get_devices"),
-    path('circuits/<int:id>/<str:end_date>/<str:end_date>', circuits.get_usage),
+    path('circuits/<int:id>/<str:end_date>/<str:start_date>', circuits.get_usage),
     path('circuits/<int:id>/<str:end_date>', circuits.get_current_usage),
     path('circuits/<int:id>', circuits.get_circuit, name="get_circuit"),
     path('circuits', circuits.get_circuits, name="get_circuits"),
