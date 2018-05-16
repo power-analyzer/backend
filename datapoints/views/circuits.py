@@ -27,7 +27,7 @@ def get_usage(request, id, end_date, start_date):
     end = dateparse.parse_datetime(end_date)
 
     measurements = Measurement.objects.filter(circuit=id)
-    measurements = measurements.filter(time__gte=end, time__lte=start)
+    measurements = measurements.filter(time__gte=end, time__lte=start).order_by('time')
 
     # TODO: Implement some sort of "compression" so that if two years of data
     # is requested, there are only k number of "measurements" that accurately
@@ -35,6 +35,7 @@ def get_usage(request, id, end_date, start_date):
     # https://docs.djangoproject.com/en/2.0/ref/models/querysets/#aggregate
     # return HttpResponse(serializers.serialize('json', measurements))
 
-    datapoints = measurements.values_list('voltage', flat=True)
+    voltage = list(measurements.values_list('voltage', flat=True))
+    labels = list(measurements.values_list('time', flat=True))
 
-    return JsonResponse(list(datapoints), safe=False)
+    return JsonResponse({"data": voltage, "labels": labels}, safe=False)
