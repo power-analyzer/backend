@@ -23,7 +23,7 @@ class Device(models.Model):
     )
 
     def __str__(self):
-        return "Device: " + self.name
+        return "Device " + str(self.id) + ": " + self.name
 
     def add_or_get_circuit_id(self, relative_id):
         circuitQuery = Circuit.objects.filter(device=self)\
@@ -62,7 +62,7 @@ class Circuit(models.Model):
     )
 
     def __str__(self):
-        return "Circuit: " + self.name
+        return "Circuit " + str(self.id) + ": " + self.name
 
 class UnarchivedMeasurement(models.Model):
     circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE)
