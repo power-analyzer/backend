@@ -16,3 +16,4 @@ files/*
 .coverage
 static/
 db.sqlite3
+.ipynb_checkpoints
