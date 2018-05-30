@@ -82,15 +82,17 @@ def archive_measurements(circuit):
 
 
 def convert_voltage_measurements(voltages):
-    Vmax = max(voltages)
-    Vmin = min(voltages)
-    offset = (Vmin + Vmax)/2.0
-
     np_voltages = np.array(voltages)
     Vin = settings.V_IN
 
-    translated_v = ((np_voltages/Vin["num_bits"])*Vin["max_val"]-offset)/Vin["scale_factor"]
+    translated_v = (np_voltages/Vin["num_bits"])*Vin["max_val"]
 
+    Vmax = max(translated_v)
+    Vmin = min(translated_v)
+    offset = (Vmin + Vmax)/2.0
+
+    translated_v = (translated_v - offset)/Vin["scale_factor"]
+    
     fft = np.fft.fft(translated_v)
 
     # TODO: Generalize this for better results
@@ -99,14 +101,14 @@ def convert_voltage_measurements(voltages):
 
 
 def convert_current_measurements(currents):
-    Imax = max(currents)
-    Imin = min(currents)
-    offset = (Imin + Imax) / 2
-
     np_currents = np.array(currents)
     Iin = settings.I_IN
 
-    translated_i = ((np_currents/Iin["num_bits"])*Iin["max_val"] - offset)/Iin["scale_factor"]*Iin["secondary"]
+    translated_i = (np_currents/Iin["num_bits"])*Iin["max_val"]
+    Imax = max(translated_i)
+    Imin = min(translated_i)
+    offset = (Imin + Imax) / 2
+    translated_i = (translated_i - offset)/Iin["scale_factor"]*Iin["secondary"]
 
     fft = np.fft.fft(translated_i)
 
