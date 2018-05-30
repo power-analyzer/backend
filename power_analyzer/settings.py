@@ -142,3 +142,21 @@ CT_CURRENT = {
 CT_VOLTAGE = {
     "10A": (0.003, 0.0097)
 }
+
+#Vin = [(V_adc/num_bits)*max_val-offset]/scale_factor
+V_IN = {
+    "num_bits": 1024,
+    "max_val": 3.1,
+    "offset": 1.5,
+    "scale_factor": 8.8589E-3,
+}
+
+#Iin = {[(V_adc/num_bits)*max_val-offset]/scale_factor}/resistance*secondary
+I_IN = {
+    "num_bits": 1024,
+    "max_val": 3.1,
+    "offset": 1.5,
+    "scale_factor": 454.45E-3,
+    "resistance": 42,
+    "secondary": .2,
+}

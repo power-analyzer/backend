@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.conf import settings
 
 from datapoints.models import Device, UnarchivedMeasurement, Measurement
-from datapoints.utilities import archive_or_add_measurement, convert_measurement_value
+from datapoints.utilities import archive_or_add_measurement
 
 
 class GenericTest(TestCase):
@@ -70,19 +70,3 @@ class GenericTest(TestCase):
         archive_or_add_measurement(new)
         self.assertIs(len(UnarchivedMeasurement.objects.filter(circuit=circuit)), 1, msg="archive_or_add_measurement() didn't archive measurements")
         self.assertIs(len(Measurement.objects.filter(circuit=circuit)), 1, msg="archive_measurements() didnt' add a new Measurement()")
-
-    def test_convert_measurement_value(self):
-        device = Device()
-        device.mac = "test_convert_measurement_value Mac"
-        device.name = "test"
-        device.location = "N/A"
-        device.description = "test device"
-        device.save()
-
-        circuit = device.add_or_get_circuit_id(0)
-
-        test1 = convert_measurement_value(1000, circuit, "voltage")
-        self.assertAlmostEqual(test1, 0.1972, "Problem with voltage calculation in test_convert_measurement_value")
-
-        test2 = convert_measurement_value(1000, circuit, "current")
-        self.assertAlmostEqual(test2, 8.992688, "Problem with current calculation in test_convert_measurement_value")
