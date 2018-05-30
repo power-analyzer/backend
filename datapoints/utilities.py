@@ -39,46 +39,18 @@ def archive_measurements(circuit):
     oldest = unarchived_measurements.last().time
     measurement.time = (newest - oldest) / 2 + oldest
 
-    # TODO: Change this to just average phase and magnitude of data.
     #Calculate new power, voltage, and current
     dT = (newest - oldest) / len(unarchived_measurements)
     dT = dT.total_seconds()
-    for key in ["power", "voltage", "current"]:
-        power = 0.0
-        for umeasurement in unarchived_measurements:
-            try:
-                power += getattr(umeasurement, key) * dT
-            except (AttributeError, TypeError) as e:
-                pass
+    for key in ["phase", "magnitude"]:
 
-        try:
-            setattr(measurement, key, power)
-        except KeyError:
-            pass
+        sum_var = sum(map(lambda x: int(getattr(x, key)), unarchived_measurements))
+        average = sum_var / len(unarchived_measurements)
 
-    # Phase????
-    # TODO: Figure this out.
-    measurement.phase = unarchived_measurements.first().phase
+        setattr(measurement, key, average)
 
     measurement.save()
     unarchived_measurements.delete()
-
-# def convert_measurement_value(value, circuit, key):
-#     if key == "voltage":
-#         value = value / 16
-#         ct_type = circuit.circuit_transformer_type
-#         ct_equation_voltage = settings.CT_VOLTAGE[ct_type]
-#         return value * ct_equation_voltage[0] + ct_equation_voltage[1]
-#     elif key == "current":
-#         value = value / 16
-#         ct_type = circuit.circuit_transformer_type
-#         ct_equation_voltage = settings.CT_VOLTAGE[ct_type]
-#         ct_equation_current = settings.CT_CURRENT[ct_type]
-#         voltage = value * ct_equation_voltage[0] + ct_equation_voltage[1]
-#         return voltage * ct_equation_current[0] + ct_equation_current[1]
-#     else:
-#         # Phase eventually needs to be converted as well.
-#         return value
 
 
 def convert_voltage_measurements(voltages):
@@ -92,7 +64,7 @@ def convert_voltage_measurements(voltages):
     offset = (Vmin + Vmax)/2.0
 
     translated_v = (translated_v - offset)/Vin["scale_factor"]
-    
+
     fft = np.fft.fft(translated_v)
 
     # TODO: Generalize this for better results
