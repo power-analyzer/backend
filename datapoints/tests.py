@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.conf import settings
 
 from datapoints.models import Device, UnarchivedMeasurement, Measurement
-from datapoints.utilities import archive_or_add_measurement
+from datapoints.utilities.measurements import archive_or_add_measurement
 
 
 class GenericTest(TestCase):
