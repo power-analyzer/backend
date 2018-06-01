@@ -23,7 +23,7 @@ def email(msg, recipient):
     send_mail(
         'Power Notification',
         msg,
-        'power-analyzer@github.io',
+        'ryan.rabello@wallawalla.edu',
         [recipient],
         fail_silently=False,
     )

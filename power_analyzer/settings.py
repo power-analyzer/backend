@@ -26,11 +26,15 @@ SECRET_KEY = 'duq11xty6yn=y&dp7%xcv7f*5b+8^kvp$96ug6)4j@myfu18(l'
 DEBUG = True
 
 # SECURITY WARNING: EMAIL USERNAME AND PASSWD
-EMAIL_HOST = "HOST"
-EMAIL_HOST_USER = "USERNAME"
-EMAIL_HOST_PASSWORD = "Password"
-EMAIL_PORT = 25
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "ryan.rabello@wallawalla.edu"
+EMAIL_HOST_PASSWORD = "password"
 EMAIL_SUBJECT_PREFIX = "Power Analyzer"
+DEFAULT_FROM_EMAIL = "ryan.rabello@wallawalla.edu"
+SERVER_EMAIL = "ryan.rabello@wallawalla.edu"
 
 ALLOWED_HOSTS = [
     "172.16.38.103",
