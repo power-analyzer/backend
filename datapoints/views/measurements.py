@@ -1,4 +1,5 @@
 import json
+import cmath
 
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST, require_GET
@@ -34,13 +35,24 @@ def batch_upload(request, mac):
     for circuit_id, readings in body.items():
         # Get circuit
         circuit = device.add_or_get_circuit_id(int(circuit_id))
+
         # create a new Measurement() and the values for it
         measurement = UnarchivedMeasurement()
+        measurement.circuit = circuit
         measurement.time = time
+        # calculate the power, voltage and current
         complex_current = convert_current_measurements(readings)
         magnitude, phase = calculate_complex_power(complex_voltage, complex_current)
+        # power
         measurement.magnitude = magnitude
         measurement.phase = phase
+        # voltage
+        measurement.v_magnitude = abs(complex_voltage)
+        measurement.v_phase = cmath.phase(complex_voltage)
+        # current
+        measurement.i_magnitude = abs(complex_current)
+        measurement.i_phase = cmath.phase(complex_current)
+
         measurement.circuit = circuit
         check_alert(circuit, measurement)
         archive_or_add_measurement(measurement)
