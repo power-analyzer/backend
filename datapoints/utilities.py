@@ -42,7 +42,7 @@ def archive_measurements(circuit):
     #Calculate new power, voltage, and current
     dT = (newest - oldest) / len(unarchived_measurements)
     dT = dT.total_seconds()
-    for key in ["phase", "magnitude"]:
+    for key in settings.MEASUREMENT_FIELDS:
 
         sum_var = sum(map(lambda x: int(getattr(x, key)), unarchived_measurements))
         average = sum_var / len(unarchived_measurements)
@@ -63,12 +63,12 @@ def convert_voltage_measurements(voltages):
     Vmin = min(translated_v)
     offset = (Vmin + Vmax)/2.0
 
-    translated_v = (translated_v - offset)/Vin["scale_factor"]
+    translated_v = (translated_v - offset)
 
     fft = np.fft.fft(translated_v)
 
     # TODO: Generalize this for better results
-    return fft[33]
+    return fft[1]/17/Vin["scale_factor"]
 
 
 
@@ -80,12 +80,12 @@ def convert_current_measurements(currents):
     Imax = max(translated_i)
     Imin = min(translated_i)
     offset = (Imin + Imax) / 2
-    translated_i = (translated_i - offset)/Iin["scale_factor"]*Iin["secondary"]
+    translated_i = (translated_i - offset)*Iin["secondary"]
 
-    fft = np.fft.fft(translated_i)
+    fft = np.fft.fft(translated_i, 34)
 
     # TODO: Generalize this for better results
-    return fft[33]
+    return fft[1]/17/Iin["scale_factor"]
 
 
 def calculate_complex_power(voltage, current):

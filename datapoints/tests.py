@@ -9,6 +9,8 @@ from django.conf import settings
 from datapoints.models import Device, UnarchivedMeasurement, Measurement
 from datapoints.utilities import archive_or_add_measurement
 
+TEST_NUM_MAX = 50
+TEST_NUM_MIN = 1
 
 class GenericTest(TestCase):
 
@@ -38,8 +40,8 @@ class GenericTest(TestCase):
             time = timezone.now()
         measurement.time = time
         measurement.circuit = circuit
-        for key in ["magnitude", "phase"]:
-            setattr(measurement, key, random.randint(1,10)*5)
+        for key in settings.MEASUREMENT_FIELDS:
+            setattr(measurement, key, random.randint(TEST_NUM_MIN,TEST_NUM_MAX))
 
 
     def test_archive_measurements(self):
@@ -66,4 +68,8 @@ class GenericTest(TestCase):
         self.assertIs(len(UnarchivedMeasurement.objects.filter(circuit=circuit)), 2, msg="archive_or_add_measurement() didn't insert measurement")
         archive_or_add_measurement(new)
         self.assertIs(len(UnarchivedMeasurement.objects.filter(circuit=circuit)), 1, msg="archive_or_add_measurement() didn't archive measurements")
-        self.assertIs(len(Measurement.objects.filter(circuit=circuit)), 1, msg="archive_measurements() didnt' add a new Measurement()")
+
+        new_measurements = Measurement.objects.filter(circuit=circuit)
+        self.assertIs(len(new_measurements), 1, msg="archive_measurements() didnt' add a new Measurement()")
+        for key in settings.MEASUREMENT_FIELDS:
+            self.assertTrue(TEST_NUM_MIN <= getattr(new_measurements[0], key) <= TEST_NUM_MAX)
