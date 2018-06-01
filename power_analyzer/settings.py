@@ -25,6 +25,13 @@ SECRET_KEY = 'duq11xty6yn=y&dp7%xcv7f*5b+8^kvp$96ug6)4j@myfu18(l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# SECURITY WARNING: EMAIL USERNAME AND PASSWD
+EMAIL_HOST = "HOST"
+EMAIL_HOST_USER = "USERNAME"
+EMAIL_HOST_PASSWORD = "Password"
+EMAIL_PORT = 25
+EMAIL_SUBJECT_PREFIX = "Power Analyzer"
+
 ALLOWED_HOSTS = [
     "172.16.38.103",
     "127.0.0.1",
