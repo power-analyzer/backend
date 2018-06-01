@@ -1,5 +1,5 @@
 import logging
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 
 from datapoints.models import Alert
 
@@ -20,10 +20,13 @@ def check_alert(circuit, measurement):
 
 
 def email(msg, recipient):
-    send_mail(
-        'Power Notification',
-        msg,
-        'ryan.rabello@wallawalla.edu',
-        [recipient],
-        fail_silently=False,
-    )
+    # send_mail(
+    #     'Power Notification',
+    #     msg,
+    #     'ryan.rabello@power.rabello.info',
+    #     [recipient],
+    #     fail_silently=False,
+    # )
+
+    email = EmailMessage(body=msg, subject="thing", to=[recipient])
+    email.send(fail_silently=False)

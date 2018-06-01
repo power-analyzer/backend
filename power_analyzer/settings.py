@@ -27,14 +27,13 @@ DEBUG = True
 
 # SECURITY WARNING: EMAIL USERNAME AND PASSWD
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.office365.com'
+EMAIL_HOST = 'smtp.sparkpostmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "ryan.rabello@wallawalla.edu"
-EMAIL_HOST_PASSWORD = "password"
+EMAIL_HOST_USER = "SMTP_Injection"
+EMAIL_HOST_PASSWORD = "d8dc6379b6aad714b9b55f1ada896e572a4f80d7"
 EMAIL_SUBJECT_PREFIX = "Power Analyzer"
-DEFAULT_FROM_EMAIL = "ryan.rabello@wallawalla.edu"
-SERVER_EMAIL = "ryan.rabello@wallawalla.edu"
+DEFAULT_FROM_EMAIL = "Power Analyzer <no-reply@power.rabello.info>"
 
 ALLOWED_HOSTS = [
     "172.16.38.103",
@@ -42,6 +41,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "blarple.net",
     "35.165.91.189",
+    "pa.rabello.info",
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
