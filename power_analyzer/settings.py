@@ -148,7 +148,7 @@ V_IN = {
     "num_bits": 1024,
     "max_val": 3.1,
     "offset": 1.5,
-    "scale_factor": 8.8589E-3,
+    "scale_factor": complex(0.0040, 0.0045),
 }
 
 #Iin = {[(V_adc/num_bits)*max_val-offset]/scale_factor}/resistance*secondary
@@ -160,3 +160,12 @@ I_IN = {
     "resistance": 42,
     "secondary": .2,
 }
+
+MEASUREMENT_FIELDS = [
+    "phase",
+    "magnitude",
+    "v_magnitude",
+    "v_phase",
+    "i_magnitude",
+    "i_phase",
+]

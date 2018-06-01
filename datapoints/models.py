@@ -71,6 +71,12 @@ class UnarchivedMeasurement(models.Model):
     magnitude = models.FloatField()
     phase = models.FloatField()
 
+    v_magnitude = models.FloatField()
+    v_phase = models.FloatField()
+
+    i_magnitude = models.FloatField()
+    i_phase = models.FloatField()
+
 
     def __str__(self):
         return str(self.time)
@@ -82,7 +88,16 @@ class Measurement(models.Model):
 
     magnitude = models.FloatField()
     phase = models.FloatField()
-    max_phase = models.FloatField(null=True)
+
+    max_p_phase = models.FloatField(null=True)
+    max_i = models.FloatField(null=True)
+
+    v_magnitude = models.FloatField()
+    v_phase = models.FloatField()
+
+    i_magnitude = models.FloatField()
+    i_phase = models.FloatField()
+
 
     def __str__(self):
         return str(self.time)
