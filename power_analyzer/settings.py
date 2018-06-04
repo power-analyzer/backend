@@ -44,6 +44,8 @@ ALLOWED_HOSTS = [
     "pa.rabello.info",
 ]
 
+SERVER_URL = "https://pa.rabello.info"
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition

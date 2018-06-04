@@ -6,8 +6,9 @@ from django.urls import reverse
 from django.utils import timezone
 from django.conf import settings
 
-from datapoints.models import Device, UnarchivedMeasurement, Measurement
+from datapoints.models import Device, UnarchivedMeasurement, Measurement, Alert, Circuit
 from datapoints.utilities.measurements import archive_or_add_measurement
+from datapoints.utilities.email import check_alert
 
 TEST_NUM_MAX = 50
 TEST_NUM_MIN = 1
@@ -73,3 +74,66 @@ class GenericTest(TestCase):
         self.assertIs(len(new_measurements), 1, msg="archive_measurements() didnt' add a new Measurement()")
         for key in settings.MEASUREMENT_FIELDS:
             self.assertTrue(TEST_NUM_MIN <= getattr(new_measurements[0], key) <= TEST_NUM_MAX)
+
+    def test_email(self):
+        now = timezone.now()
+        less_than_one_hour = now - timezone.timedelta(minutes=59)
+        two_hours_ago = now - timezone.timedelta(hours=2)
+        default = 20
+
+        # Create Test Device & Circuit
+        test_mac = "test_email"
+        device = Device()
+        device.mac = test_mac
+        device.save()
+        circuit = Circuit()
+        circuit.device = device
+        circuit.relative_id = 0
+
+        circuit.save()
+
+        #Create Test Alert
+        alert = Alert()
+        alert.circuit = circuit
+        alert.last_used = two_hours_ago
+        alert.frequency_limit = 1*60 #1hour*60min/hour
+        alert.max_val = 30
+        alert.min_val = 10
+        alert.email = "ryan.rabello@wallawalla.edu"
+        # alert.attribute = "magnitude" # This is defalt
+        alert.save()
+
+        #Create Measurement
+        measurement = Measurement()
+        measurement.circuit = circuit
+        measurement.time = now
+        measurement.magnitude = default
+        measurement.phase = default
+        measurement.max_p_phase = default
+        measurement.max_i = default
+        measurement.v_magnitude = default
+        measurement.v_phase = default
+        measurement.i_magnitude = default
+        measurement.i_phase = default
+        measurement.save()
+
+        # Check to make sure no email is sent for value withing range.
+        self.assertIs(check_alert(circuit, measurement), False, msg="check_alert() should not have sent an email")
+        # Create low measurement
+        alert.last_used = two_hours_ago
+        alert.save()
+        measurement.magnitude = 10
+        measurement.save()
+        self.assertIs(check_alert(circuit, measurement), True, msg="check_alert() should send an email (return True)")
+
+        # Check High Measurement
+        alert.last_used = two_hours_ago
+        alert.save()
+        measurement.magnitude = 30
+        measurement.save()
+        self.assertIs(check_alert(circuit, measurement), True, msg="check_alert() should send an email (return True)")
+
+        # Check frequency_limit
+        alert.last_used = less_than_one_hour
+        alert.save()
+        self.assertIs(check_alert(circuit, measurement), False, msg="check_alert() should not an email")
