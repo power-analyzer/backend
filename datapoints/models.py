@@ -112,6 +112,5 @@ class Alert(models.Model):
     email = models.CharField(max_length=200)
     attribute = models.CharField(
         max_length=200,
-        choices=(("phase", "Phase"), ("magnitude", "Magnitude")),
-        default="magnitude"
+        default="magnitude",
     )
