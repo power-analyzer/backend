@@ -114,3 +114,8 @@ class Alert(models.Model):
         max_length=200,
         default="magnitude",
     )
+    name = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        name = self.name if self.name else ""
+        return "Alert " + str(self.id) + ": " + name

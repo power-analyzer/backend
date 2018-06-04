@@ -1,5 +1,4 @@
 import logging
-import code
 
 from smtplib import SMTPException
 from django.core.mail import EmailMessage
