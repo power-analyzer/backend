@@ -100,7 +100,7 @@ class GenericTest(TestCase):
         alert.max_val = 30
         alert.min_val = 10
         alert.email = "ryan.rabello@wallawalla.edu"
-        # alert.attribute = "magnitude" # This is defalt
+        # alert.attribute = "magnitude" # This is default
         alert.save()
 
         #Create Measurement
