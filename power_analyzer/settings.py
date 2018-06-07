@@ -25,13 +25,26 @@ SECRET_KEY = 'duq11xty6yn=y&dp7%xcv7f*5b+8^kvp$96ug6)4j@myfu18(l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# SECURITY WARNING: EMAIL USERNAME AND PASSWD
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sparkpostmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "SMTP_Injection"
+EMAIL_HOST_PASSWORD = "d8dc6379b6aad714b9b55f1ada896e572a4f80d7"
+EMAIL_SUBJECT_PREFIX = "Power Analyzer"
+DEFAULT_FROM_EMAIL = "Power Analyzer <no-reply@power.rabello.info>"
+
 ALLOWED_HOSTS = [
     "172.16.38.103",
     "127.0.0.1",
     "localhost",
     "blarple.net",
     "35.165.91.189",
+    "pa.rabello.info",
 ]
+
+SERVER_URL = "https://pa.rabello.info"
 
 CORS_ORIGIN_ALLOW_ALL = True
 

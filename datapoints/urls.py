@@ -1,6 +1,6 @@
 from django.urls import path
 
-from datapoints.views import buildings, measurements, devices, circuits
+from datapoints.views import buildings, measurements, devices, circuits, alerts
 
 app_name = 'datapoints'
 urlpatterns = [
@@ -16,4 +16,6 @@ urlpatterns = [
     path('circuits/<int:id>/<str:end_date>', circuits.get_current_usage),
     path('circuits/<int:id>', circuits.get_circuit, name="get_circuit"),
     path('circuits', circuits.get_circuits, name="get_circuits"),
+    path('alerts/<int:id>', alerts.edit_alert, name="edit_alert"),
+    path('alerts', alerts.get_all_alerts_or_add_alert, name="get_all_alerts_or_add_alert"),
 ]

@@ -101,3 +101,21 @@ class Measurement(models.Model):
 
     def __str__(self):
         return str(self.time)
+
+
+class Alert(models.Model):
+    circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE)
+    last_used = models.DateTimeField()
+    frequency_limit = models.IntegerField()
+    max_val = models.FloatField(null=True)
+    min_val = models.FloatField(null=True)
+    email = models.CharField(max_length=200)
+    attribute = models.CharField(
+        max_length=200,
+        default="magnitude",
+    )
+    name = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        name = self.name if self.name else ""
+        return "Alert " + str(self.id) + ": " + name

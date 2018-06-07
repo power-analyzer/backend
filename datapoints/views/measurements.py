@@ -7,13 +7,14 @@ from django.utils import timezone
 # from django.shortcuts import get_object_or_404
 
 from datapoints.models import UnarchivedMeasurement
-from datapoints.utilities import (
+from datapoints.utilities.measurements import (
         get_or_add_device,
         archive_or_add_measurement,
         convert_voltage_measurements,
         convert_current_measurements,
         calculate_complex_power,
     )
+from datapoints.utilities.email import check_alert
 
 
 def index(request):
@@ -52,6 +53,8 @@ def batch_upload(request, mac):
         measurement.i_magnitude = abs(complex_current)
         measurement.i_phase = cmath.phase(complex_current)
 
+        measurement.circuit = circuit
+        check_alert(circuit, measurement)
         archive_or_add_measurement(measurement)
     return HttpResponse('{"status":"success"}')
 
