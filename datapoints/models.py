@@ -61,6 +61,8 @@ class Circuit(models.Model):
         default="right"
     )
 
+    ct_windings = models.IntegerField(default=2000)
+
     def __str__(self):
         return "Circuit " + str(self.id) + ": " + self.name
 

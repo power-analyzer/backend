@@ -41,7 +41,7 @@ def batch_upload(request, mac):
         measurement.circuit = circuit
         measurement.time = time
         # calculate the power, voltage and current
-        complex_current = convert_current_measurements(readings)
+        complex_current = convert_current_measurements(readings, circuit.ct_windings)
         magnitude, phase = calculate_complex_power(complex_voltage, complex_current)
         # power
         measurement.magnitude = magnitude
