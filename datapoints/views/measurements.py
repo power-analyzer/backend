@@ -27,6 +27,8 @@ def batch_upload(request, mac):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
 
+    print(body_unicode)
+
     voltages = body["V"]
     del body["V"]
     complex_voltage = convert_voltage_measurements(voltages)
