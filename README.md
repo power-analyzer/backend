@@ -1,6 +1,5 @@
 [![Build](https://travis-ci.org/power-analyzer/backend.svg?branch=master)](https://travis-ci.org/power-analyzer/backend?branch=master)
-[![Maintainability](https://api.codeclimate.com/v1/badges/008dda045f26667cec43/maintainability)](https://codeclimate.com/github/power-analyzer/backend/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/008dda045f26667cec43/test_coverage)](https://codeclimate.com/github/power-analyzer/backend/test_coverage)
+
 
 # Power Analyzer (Backend)
 This is the backend component of Nathan Zimmerly and Ryan Rabello's senior
