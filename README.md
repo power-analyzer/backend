@@ -1,5 +1,5 @@
 [![Build](https://travis-ci.org/power-analyzer/backend.svg?branch=master)](https://travis-ci.org/power-analyzer/backend?branch=master)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/39d31d13eaef4e3dbc8700430158168f)](https://www.codacy.com/app/asteroidice/backend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=power-analyzer/backend&amp;utm_campaign=Badge_Grade)
 
 # Power Analyzer (Backend)
 This is the backend component of Nathan Zimmerly and Ryan Rabello's senior
