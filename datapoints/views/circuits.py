@@ -35,7 +35,7 @@ def get_usage(request, id, end_date, start_date):
     # https://docs.djangoproject.com/en/2.0/ref/models/querysets/#aggregate
     # return HttpResponse(serializers.serialize('json', measurements))
 
-    voltage = list(measurements.values_list('voltage', flat=True))
+    voltage = list(measurements.values_list('magnitude', flat=True))
     labels = list(measurements.values_list('time', flat=True))
 
     return JsonResponse({"data": voltage, "labels": labels}, safe=False)

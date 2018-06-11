@@ -68,11 +68,11 @@ def convert_voltage_measurements(voltages):
     fft = np.fft.fft(translated_v)
 
     # TODO: Generalize this for better results
-    return fft[1]/17/Vin["scale_factor"]
+    return fft[1]/17/complex(9.0413E-03,  1.0112E-04)
 
 
 
-def convert_current_measurements(currents):
+def convert_current_measurements(currents, N):
     np_currents = np.array(currents)
     Iin = settings.I_IN
 
@@ -80,12 +80,15 @@ def convert_current_measurements(currents):
     Imax = max(translated_i)
     Imin = min(translated_i)
     offset = (Imin + Imax) / 2
-    translated_i = (translated_i - offset)*Iin["secondary"]
+    translated_i = (translated_i - offset)
+    x = translated_i
+    translated_i = (6.406266326E3-5.308287991j)*N*N*x \
+            /(2.715290040E5*N+1.326246007j*x-1.600357741E3*x)
 
-    fft = np.fft.fft(translated_i, 34)
+    fft = np.fft.fft(translated_i)
 
     # TODO: Generalize this for better results
-    return fft[1]/17/Iin["scale_factor"]
+    return fft[1]/17
 
 
 def calculate_complex_power(voltage, current):
