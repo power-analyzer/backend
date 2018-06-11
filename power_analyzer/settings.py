@@ -25,8 +25,28 @@ SECRET_KEY = 'duq11xty6yn=y&dp7%xcv7f*5b+8^kvp$96ug6)4j@myfu18(l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: EMAIL USERNAME AND PASSWD
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sparkpostmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "SMTP_Injection"
+EMAIL_HOST_PASSWORD = "d8dc6379b6aad714b9b55f1ada896e572a4f80d7"
+EMAIL_SUBJECT_PREFIX = "Power Analyzer"
+DEFAULT_FROM_EMAIL = "Power Analyzer <no-reply@power.rabello.info>"
 
+ALLOWED_HOSTS = [
+    "172.16.38.103",
+    "127.0.0.1",
+    "localhost",
+    "blarple.net",
+    "35.165.91.189",
+    "pa.rabello.info",
+]
+
+SERVER_URL = "https://pa.rabello.info"
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -38,16 +58,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'power_analyzer.urls'
@@ -70,6 +92,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'power_analyzer.wsgi.application'
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -118,4 +141,44 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/admin/static/'
+
+# Custom settings
+ARCHIVE_TIME = 30       # Archive interval in minutes
+
+# This is (m, b) in the queation I = m * V + b for the current transformer.
+CT_CURRENT = {
+    "10A": (10.29, 6.9635)
+}
+
+# This is the linear quation for going from the ADC value to the voltage
+CT_VOLTAGE = {
+    "10A": (0.003, 0.0097)
+}
+
+#Vin = [(V_adc/num_bits)*max_val-offset]/scale_factor
+V_IN = {
+    "num_bits": 1024,
+    "max_val": 3.1,
+    "offset": 1.5,
+    "scale_factor": complex(0.0040, 0.0045),
+}
+
+#Iin = {[(V_adc/num_bits)*max_val-offset]/scale_factor}/resistance*secondary
+I_IN = {
+    "num_bits": 1024,
+    "max_val": 3.1,
+    "offset": 1.5,
+    "scale_factor": 454.45E-3,
+    "resistance": 42,
+    "secondary": .2,
+}
+
+MEASUREMENT_FIELDS = [
+    "phase",
+    "magnitude",
+    "v_magnitude",
+    "v_phase",
+    "i_magnitude",
+    "i_phase",
+]
